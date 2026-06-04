@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Principal</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
+        .navbar { background: #343a40; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+        .container { max-width: 800px; margin: 50px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center; }
+        h1 { color: #212529; }
+        .btn-panel { display: inline-block; padding: 15px 30px; margin: 15px; font-size: 18px; font-weight: bold; text-decoration: none; border-radius: 8px; color: white; cursor: pointer; transition: background 0.2s; }
+        .btn-search { background: #28a745; }
+        .btn-search:hover { background: #218838; }
+        .btn-logout { background: #dc3545; }
+        .btn-logout:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div><strong>Sistema de Inventario</strong></div>
+        <div>Bienvenido, {{ nombre }}</div>
+    </div>
+    <div class="container">
+        <h1>Panel de Control Principal</h1>
+        <p>Selecciona una de las acciones disponibles en el sistema:</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+        <a href="/buscador" class="btn-panel btn-search">🔍 Ir al Buscador de Productos</a>
+        <a href="/logout" class="btn-panel btn-logout">🚪 Salir del Sistema</a>
+    </div>
+</body>
+</html>

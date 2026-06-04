@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador de Productos</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        h2 { color: #333; margin-top: 0; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 25px; }
+        input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; }
+        button { padding: 12px 20px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        .result-card { background: #f8f9fa; border: 1px solid #e9ecef; padding: 20px; border-radius: 8px; display: none; margin-bottom: 25px; }
+        .result-card h3 { margin-top: 0; color: #007bff; }
+        .info-row { margin-bottom: 8px; font-size: 15px; }
+        .actions { display: flex; justify-content: space-between; margin-top: 20px; }
+        .btn-nav { text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; font-size: 14px; }
+        .btn-back { background: #6c757d; color: white; }
+        .btn-exit { background: #dc3545; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Consulta de Productos</h2>
+        <div class="search-box">
+            <input type="text" id="codigoInput" placeholder="Ingrese código (Ej: P001, P002)">
+            <button onclick="buscarProducto()">Buscar</button>
+        </div>
+
+        <div id="resultado" class="result-card"></div>
+
+        <div class="actions">
+            <a href="/principal" class="btn-nav btn-back">⬅️ Regresar al Panel</a>
+            <a href="/logout" class="btn-nav btn-exit">🚪 Salir del Sistema</a>
+        </div>
+    </div>
+
+    <script>
+        async function buscarProducto() {
+            const codigo = document.getElementById('codigoInput').value;
+            const resultadoDiv = document.getElementById('resultado');
+            
+            if(!codigo) {
+                alert('Por favor ingrese un código de producto.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/buscar_producto', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ codigo: codigo })
+                });
+                
+                const data = await response.json();
+                
+                resultadoDiv.style.display = 'block';
+                if(data.encontrado) {
+                    resultadoDiv.innerHTML = `
+                        <h3>${data.nombre}</h3>
+                        <div class="info-row"><strong>Código:</strong> ${data.codigo}</div>
+                        <div class="info-row"><strong>Categoría:</strong> ${data.categoria}</div>
+                        <div class="info-row"><strong>Descripción:</strong> ${data.descripcion}</div>
+                        <div class="info-row"><strong>Precio:</strong> S/ ${data.precio.toFixed(2)}</div>
+                        <div class="info-row"><strong>Stock:</strong> ${data.stock} unidades</div>
+                    `;
+                } else {
+                    resultadoDiv.innerHTML = `<p style="color: #dc3545; font-weight: bold; margin: 0;">⚠️ Producto no encontrado.</p>`;
+                }
+            } catch (error) {
+                console.error('Error al realizar la consulta:', error);
+            }
+        }
+    </script>
+</body>
+</html>
