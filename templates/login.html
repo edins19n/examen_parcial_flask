@@ -12,24 +12,23 @@
         input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
         button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
         button:hover { background: #0056b3; }
-        .error { color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 6px; font-size: 14px; text-align: center; margin-bottom: 15px; }
+        .error { color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 6px; font-size: 14px; text-align: center; margin-bottom: 15px; display: none; } /* Ocultamos el div de error por defecto */
     </style>
 </head>
 <body>
     <div class="login-card">
         <h2>Iniciar Sesión</h2>
-        {% if error %}
-            <div class="error">{{ error }}</div>
-        {% endif %}
-        <form action="/login" method="POST">
+        
+        <div class="error" id="mensajeError"></div>
+        
+        <form action="https://examen-parcial-flask.onrender.com" method="POST">
             <div class="form-group">
                 <label>Usuario</label>
                 <input type="text" name="username" required placeholder="Ej: admin">
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" name="password" required placeholder="Ej: admin123">
-            </div>
+                <input type="password" name="password" required placeholder="Ej: 1234"> </div>
             <button type="submit">Ingresar</button>
         </form>
     </div>
