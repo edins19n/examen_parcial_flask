@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask_cors import CORS
 import sqlite3
 import os
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = 'clave_secreta_examen_aplicada'
 
 DATABASE = 'database.db'
